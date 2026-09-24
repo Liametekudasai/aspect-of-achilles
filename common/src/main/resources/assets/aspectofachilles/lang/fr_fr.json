@@ -1,0 +1,14 @@
+{
+  "modmenu.nameTranslation.aspectofachilles": "Aspect of Achilles",
+  "modmenu.descriptionTranslation.aspectofachilles": "Enchantements de trident avec tether et mobilité.",
+  "aspectofachilles.title": "Aspect of Achilles",
+  "aspectofachilles.status.inactive": "Aucun tether",
+  "aspectofachilles.status.obedience": "Tether Obedience actif",
+  "aspectofachilles.status.achilles": "Tether Aspect of Achilles actif",
+  "aspectofachilles.hint.recall": "Clic droit pour rappeler le trident",
+  "aspectofachilles.hint.pull": "Clic gauche pour vous propulser vers le trident",
+  "enchantment.aspectofachilles.obedience": "Obedience",
+  "enchantment.aspectofachilles.aspect_of_achilles": "Aspect of Achilles",
+  "entity.aspectofachilles.tether": "Tether",
+  "aspectofachilles.debug.placeholder": "Base de gameplay installée"
+}

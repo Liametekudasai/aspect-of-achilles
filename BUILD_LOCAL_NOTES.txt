@@ -1,0 +1,11 @@
+NeoForge-first workspace notes
+==============================
+
+This archive is configured to build the common + neoforge modules by default.
+The fabric module is intentionally excluded from settings.gradle in this state so
+that NeoForge builds are not blocked while the gameplay port is still unfinished.
+
+Recommended commands:
+  .\gradlew.bat --stop
+  .\gradlew.bat :neoforge:compileJava :neoforge:processResources --refresh-dependencies --stacktrace
+  .\gradlew.bat :neoforge:build --refresh-dependencies --stacktrace

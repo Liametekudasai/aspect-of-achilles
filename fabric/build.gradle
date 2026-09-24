@@ -1,0 +1,34 @@
+plugins {
+    id 'multiloader-loader'
+    alias(libs.plugins.fabricLoom)
+}
+
+dependencies {
+    minecraft libs.minecraft
+    mappings loom.officialMojangMappings()
+    modImplementation libs.fabricLoader
+    modImplementation libs.fabricApi
+}
+
+apply from: rootProject.file('repositories.gradle')
+apply from: 'dependencies.gradle'
+
+loom {
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+    runs {
+        client {
+            client()
+            setConfigName('fabric Client')
+            ideConfigGenerated(true)
+            runDir('runs/fabric-client')
+        }
+        server {
+            server()
+            setConfigName('fabric Server')
+            ideConfigGenerated(true)
+            runDir('runs/fabric-server')
+        }
+    }
+}

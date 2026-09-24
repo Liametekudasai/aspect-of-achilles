@@ -1,0 +1,14 @@
+{
+  "modmenu.nameTranslation.aspectofachilles": "Aspect of Achilles",
+  "modmenu.descriptionTranslation.aspectofachilles": "Trident tether and mobility enchantments.",
+  "aspectofachilles.title": "Aspect of Achilles",
+  "aspectofachilles.status.inactive": "No tether",
+  "aspectofachilles.status.obedience": "Obedience tether active",
+  "aspectofachilles.status.achilles": "Aspect of Achilles tether active",
+  "aspectofachilles.hint.recall": "Right click to recall the trident",
+  "aspectofachilles.hint.pull": "Left click to launch toward the trident",
+  "enchantment.aspectofachilles.obedience": "Obedience",
+  "enchantment.aspectofachilles.aspect_of_achilles": "Aspect of Achilles",
+  "entity.aspectofachilles.tether": "Tether",
+  "aspectofachilles.debug.placeholder": "Gameplay scaffold installed"
+}

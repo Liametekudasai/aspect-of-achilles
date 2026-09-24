@@ -1,0 +1,2 @@
+Balm version corrected for Twelve Iterations Maven: 21.0.56+1.21.1
+The repo index lists balm-common and balm-neoforge 21.0.56+1.21.1, not 1.21.1-21.0.56.

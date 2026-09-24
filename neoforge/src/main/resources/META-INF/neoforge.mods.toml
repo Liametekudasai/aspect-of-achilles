@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="${license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${version}"
+displayName="${mod_name}"
+authors="${mod_author}"
+description='''
+Aspect of Achilles adds trident-centered tether and mobility mechanics.
+
+This NeoForge module is only the platform bootstrap layer.
+All shared gameplay code lives in the common module.
+'''
+
+[[dependencies.${mod_id}]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="neoforge"
+type="required"
+versionRange="[${neoforge_version},)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="balm"
+type="required"
+versionRange="[0,)"
+ordering="NONE"
+side="BOTH"
