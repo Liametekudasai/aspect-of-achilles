@@ -33,12 +33,8 @@ public final class TridentEnchantmentHelper {
         return getVanillaLevel(stack, registryAccess, Enchantments.RIPTIDE);
     }
 
-    public static int getSharpnessLevel(ItemStack stack, RegistryAccess registryAccess) {
-        return getVanillaLevel(stack, registryAccess, Enchantments.SHARPNESS);
-    }
-
-    public static int getPowerLevel(ItemStack stack, RegistryAccess registryAccess) {
-        return getVanillaLevel(stack, registryAccess, Enchantments.POWER);
+    public static int getImpalingLevel(ItemStack stack, RegistryAccess registryAccess) {
+        return getVanillaLevel(stack, registryAccess, Enchantments.IMPALING);
     }
 
     public static boolean hasObedience(ItemStack stack, RegistryAccess registryAccess) {
@@ -53,12 +49,12 @@ public final class TridentEnchantmentHelper {
         return getRiptideLevel(stack, registryAccess) > 0;
     }
 
-    public static boolean hasPower(ItemStack stack, RegistryAccess registryAccess) {
-        return getPowerLevel(stack, registryAccess) > 0;
+    public static int getFireAspectLevel(ItemStack stack, RegistryAccess registryAccess) {
+        return getVanillaLevel(stack, registryAccess, Enchantments.FIRE_ASPECT);
     }
 
-    public static boolean hasSharpness(ItemStack stack, RegistryAccess registryAccess) {
-        return getSharpnessLevel(stack, registryAccess) > 0;
+    public static boolean hasFireAspect(ItemStack stack, RegistryAccess registryAccess) {
+        return getFireAspectLevel(stack, registryAccess) > 0;
     }
 
     public static boolean stackWouldCreateAspect(ItemStack stack, RegistryAccess registryAccess) {
@@ -90,14 +86,8 @@ public final class TridentEnchantmentHelper {
         });
     }
 
-    public static void addOrUpgradePower(ItemStack stack, RegistryAccess registryAccess, int level) {
-        Holder<Enchantment> enchantment = resolveOrThrow(registryAccess, Enchantments.POWER);
-        int targetLevel = Math.max(level, stack.getEnchantments().getLevel(enchantment));
-        EnchantmentHelper.updateEnchantments(stack, mutable -> mutable.set(enchantment, targetLevel));
-    }
-
-    public static void addOrUpgradeSharpness(ItemStack stack, RegistryAccess registryAccess, int level) {
-        Holder<Enchantment> enchantment = resolveOrThrow(registryAccess, Enchantments.SHARPNESS);
+    public static void addOrUpgradeFireAspect(ItemStack stack, RegistryAccess registryAccess, int level) {
+        Holder<Enchantment> enchantment = resolveOrThrow(registryAccess, Enchantments.FIRE_ASPECT);
         int targetLevel = Math.max(level, stack.getEnchantments().getLevel(enchantment));
         EnchantmentHelper.updateEnchantments(stack, mutable -> mutable.set(enchantment, targetLevel));
     }

@@ -6,9 +6,10 @@
   "aspectofachilles.status.obedience": "Tether Obedience actif",
   "aspectofachilles.status.achilles": "Tether Aspect of Achilles actif",
   "aspectofachilles.hint.recall": "Clic droit pour rappeler le trident",
-  "aspectofachilles.hint.pull": "Clic gauche pour vous propulser vers le trident",
+  "aspectofachilles.hint.pull": "Clic droit pour vous propulser vers le trident",
   "enchantment.aspectofachilles.obedience": "Obedience",
   "enchantment.aspectofachilles.aspect_of_achilles": "Aspect of Achilles",
+  "jei.aspectofachilles.aspect_of_achilles.description": "À l'enclume, fusionnez un trident avec Obedience et Riptide (n'importe quel niveau) pour obtenir Aspect of Achilles.",
   "entity.aspectofachilles.tether": "Tether",
   "aspectofachilles.debug.placeholder": "Base de gameplay installée"
 }

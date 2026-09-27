@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 public final class AnvilFusionService {
 
     private static final int ACHILLES_FUSION_COST = 8;
-    private static final int COMPATIBILITY_ENCHANT_COST = 4;
+    private static final int FIRE_ASPECT_ENCHANT_COST = 4;
 
     private AnvilFusionService() {
     }
@@ -33,25 +33,20 @@ public final class AnvilFusionService {
         return base;
     }
 
-    public static boolean canApplyCompatibilityEnchant(ItemStack left, ItemStack right, RegistryAccess registryAccess) {
+    public static boolean canApplyFireAspect(ItemStack left, ItemStack right, RegistryAccess registryAccess) {
         if (!TridentEnchantmentHelper.isTrident(left) || right.isEmpty()) {
             return false;
         }
 
-        return TridentEnchantmentHelper.hasSharpness(right, registryAccess)
-                || TridentEnchantmentHelper.hasPower(right, registryAccess);
+        return TridentEnchantmentHelper.hasFireAspect(right, registryAccess);
     }
 
-    public static ItemStack createCompatibilityResult(ItemStack left, ItemStack right, RegistryAccess registryAccess) {
+    public static ItemStack createFireAspectResult(ItemStack left, ItemStack right, RegistryAccess registryAccess) {
         ItemStack result = left.copy();
 
-        int sharpness = TridentEnchantmentHelper.getSharpnessLevel(right, registryAccess);
-        int power = TridentEnchantmentHelper.getPowerLevel(right, registryAccess);
-        if (sharpness > 0) {
-            TridentEnchantmentHelper.addOrUpgradeSharpness(result, registryAccess, sharpness);
-        }
-        if (power > 0) {
-            TridentEnchantmentHelper.addOrUpgradePower(result, registryAccess, power);
+        int fireAspect = TridentEnchantmentHelper.getFireAspectLevel(right, registryAccess);
+        if (fireAspect > 0) {
+            TridentEnchantmentHelper.addOrUpgradeFireAspect(result, registryAccess, fireAspect);
         }
 
         return result;
@@ -61,8 +56,8 @@ public final class AnvilFusionService {
         return ACHILLES_FUSION_COST;
     }
 
-    public static int getCompatibilityEnchantCost() {
-        return COMPATIBILITY_ENCHANT_COST;
+    public static int getFireAspectEnchantCost() {
+        return FIRE_ASPECT_ENCHANT_COST;
     }
 
     private static ItemStack getFusionBase(ItemStack left, ItemStack right) {

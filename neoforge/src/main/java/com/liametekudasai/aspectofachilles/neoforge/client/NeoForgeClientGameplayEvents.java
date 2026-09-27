@@ -19,8 +19,4 @@ public final class NeoForgeClientGameplayEvents {
         PacketDistributor.sendToServer(TetherActionPayload.recall());
     }
 
-    @SubscribeEvent
-    public static void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
-        PacketDistributor.sendToServer(TetherActionPayload.achillesPull());
-    }
 }

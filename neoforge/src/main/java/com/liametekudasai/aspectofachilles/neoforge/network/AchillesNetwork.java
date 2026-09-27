@@ -37,7 +37,7 @@ public final class AchillesNetwork {
             if (payload.action() == TetherAction.ACHILLES_PULL) {
                 TetherService.queueAchillesPull(serverPlayer);
             } else {
-                TetherService.queueRecall(serverPlayer);
+                TetherService.queuePrimaryAction(serverPlayer);
             }
         });
     }

@@ -9,20 +9,15 @@ import com.liametekudasai.aspectofachilles.neoforge.registry.NeoForgeModEntities
 import com.liametekudasai.aspectofachilles.tether.TetherMode;
 import com.liametekudasai.aspectofachilles.tether.TetherRuntime;
 import com.liametekudasai.aspectofachilles.tether.TetherService;
-import com.liametekudasai.aspectofachilles.util.ModResourceLocations;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -50,9 +45,9 @@ public final class AchillesNeoForgeEvents {
             return;
         }
 
-        if (AnvilFusionService.canApplyCompatibilityEnchant(event.getLeft(), event.getRight(), event.getPlayer().level().registryAccess())) {
-            event.setOutput(AnvilFusionService.createCompatibilityResult(event.getLeft(), event.getRight(), event.getPlayer().level().registryAccess()));
-            event.setCost(AnvilFusionService.getCompatibilityEnchantCost());
+        if (AnvilFusionService.canApplyFireAspect(event.getLeft(), event.getRight(), event.getPlayer().level().registryAccess())) {
+            event.setOutput(AnvilFusionService.createFireAspectResult(event.getLeft(), event.getRight(), event.getPlayer().level().registryAccess()));
+            event.setCost(AnvilFusionService.getFireAspectEnchantCost());
             event.setMaterialCost(1);
         }
     }
@@ -111,69 +106,41 @@ public final class AchillesNeoForgeEvents {
     @SubscribeEvent
     public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            TetherService.queueRecall(serverPlayer);
+            TetherService.queuePrimaryAction(serverPlayer);
         }
     }
 
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            TetherService.queueRecall(serverPlayer);
+            TetherService.queuePrimaryAction(serverPlayer);
         }
-    }
-
-    @SubscribeEvent
-    public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-            TetherService.queueAchillesPull(serverPlayer);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onItemAttributeModifiers(ItemAttributeModifierEvent event) {
-        ItemStack stack = event.getItemStack();
-        if (!TridentEnchantmentHelper.isTrident(stack)) {
-            return;
-        }
-
-        int sharpnessLevel = 0;
-        for (var entry : stack.getEnchantments().entrySet()) {
-            if (entry.getKey().is(Enchantments.SHARPNESS)) {
-                sharpnessLevel = Math.max(sharpnessLevel, entry.getIntValue());
-            }
-        }
-
-        if (sharpnessLevel <= 0) {
-            return;
-        }
-
-        double bonusDamage = 0.5D * sharpnessLevel + 0.5D;
-        AttributeModifier modifier = new AttributeModifier(
-                ModResourceLocations.id("trident_sharpness_melee_bonus"),
-                bonusDamage,
-                AttributeModifier.Operation.ADD_VALUE
-        );
-        event.replaceModifier(Attributes.ATTACK_DAMAGE, modifier, EquipmentSlotGroup.MAINHAND);
     }
 
     @SubscribeEvent
     public static void onThrownTridentDamage(LivingDamageEvent.Pre event) {
         Entity directEntity = event.getSource().getDirectEntity();
-        if (!(directEntity instanceof ThrownTrident trident)) {
+        ItemStack stack = ItemStack.EMPTY;
+        if (directEntity instanceof ThrownTrident trident) {
+            stack = trident.getWeaponItem().copy();
+        } else if (directEntity instanceof ServerPlayer player && TridentEnchantmentHelper.isTrident(player.getMainHandItem())) {
+            stack = player.getMainHandItem();
+        }
+
+        if (stack.isEmpty()) {
             return;
         }
 
-        ItemStack stack = trident.getWeaponItem().copy();
-        if (!TridentEnchantmentHelper.hasPower(stack, event.getEntity().level().registryAccess())) {
-            return;
+        LivingEntity target = event.getEntity();
+        if (!target.isInWaterRainOrBubble()) {
+            event.setNewDamage(TridentDamageService.applyUniversalImpaling(
+                    event.getNewDamage(), stack, target.level().registryAccess()
+            ));
         }
 
-        float boosted = TridentDamageService.applyPowerToThrownTrident(
-                event.getNewDamage(),
-                stack,
-                event.getEntity().level().registryAccess()
-        );
-        event.setNewDamage(boosted);
+        if (directEntity instanceof ThrownTrident && TridentEnchantmentHelper.hasFireAspect(stack, target.level().registryAccess())) {
+            target.igniteForSeconds(4.0F * TridentEnchantmentHelper.getFireAspectLevel(stack, target.level().registryAccess()));
+        }
     }
 
 

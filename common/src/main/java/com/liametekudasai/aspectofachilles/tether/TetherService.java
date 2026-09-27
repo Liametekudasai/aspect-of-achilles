@@ -56,6 +56,20 @@ public final class TetherService {
         }
     }
 
+    /** Right click recalls an Obedience trident and activates an Achilles trident. */
+    public static void queuePrimaryAction(ServerPlayer player) {
+        TetherPlayerState state = TetherRuntime.get(player.getUUID());
+        if (state == null || !state.isActive()) {
+            return;
+        }
+
+        if (state.getMode() == TetherMode.ACHILLES) {
+            queueAchillesPull(player);
+        } else {
+            queueRecall(player);
+        }
+    }
+
     public static void tick(ServerPlayer player) {
         TetherPlayerState state = TetherRuntime.get(player.getUUID());
         if (state == null || !state.isActive()) {
@@ -91,7 +105,12 @@ public final class TetherService {
 
         boolean clampedToBoundary = false;
         if (distance > state.getMode().getMaxDistance()) {
-            clampTridentToRange(playerAnchor, thrownTrident, state.getMode().getMaxDistance());
+            if (isEmbedded(thrownTrident)) {
+                clampPlayerToRange(player, tridentAnchor, state.getMode().getMaxDistance());
+            } else {
+                stopTridentAtRange(playerAnchor, thrownTrident, state.getMode().getMaxDistance());
+                clampPlayerToRange(player, thrownTrident.position(), state.getMode().getMaxDistance());
+            }
             clampedToBoundary = true;
             state.setLastKnownDistance(state.getMode().getMaxDistance());
             if (state.isRecalling()) {
@@ -104,17 +123,9 @@ public final class TetherService {
         }
 
         if (state.isAchillesPullQueued()) {
-            state.beginAchillesPull();
             state.setAchillesPullQueued(false);
             state.setRecalling(false);
-        }
-
-        if (state.isAchillesPullActive()) {
-            boolean continuePull = AchillesPullController.tickPull(player, thrownTrident);
-            state.tickAchillesPull();
-            if (!continuePull || !player.isAlive()) {
-                state.stopAchillesPull();
-            }
+            AchillesPullController.pullOnce(player, thrownTrident);
         }
 
         if (state.isRecalling()) {
@@ -222,7 +233,13 @@ public final class TetherService {
         trident.hurtMarked = true;
     }
 
-    private static void clampTridentToRange(Vec3 playerAnchor, ThrownTrident trident, double maxDistance) {
+    private static boolean isEmbedded(ThrownTrident trident) {
+        // A trident embedded in a block has no meaningful remaining velocity. This avoids
+        // moving a lodged projectile just because its owner reaches the rope boundary.
+        return trident.getDeltaMovement().lengthSqr() < 1.0E-6D;
+    }
+
+    private static void stopTridentAtRange(Vec3 playerAnchor, ThrownTrident trident, double maxDistance) {
         Vec3 fromPlayer = trident.position().subtract(playerAnchor);
         if (fromPlayer.lengthSqr() < 1.0E-6D) {
             return;
@@ -232,14 +249,23 @@ public final class TetherService {
         Vec3 clampedPosition = playerAnchor.add(boundaryDirection.scale(maxDistance));
         trident.setPos(clampedPosition.x, clampedPosition.y, clampedPosition.z);
 
-        Vec3 velocity = trident.getDeltaMovement();
-        double outwardComponent = velocity.dot(boundaryDirection);
-        if (outwardComponent > 0.0D) {
-            velocity = velocity.subtract(boundaryDirection.scale(outwardComponent));
+        trident.setDeltaMovement(Vec3.ZERO);
+        trident.hurtMarked = true;
+    }
+
+    private static void clampPlayerToRange(ServerPlayer player, Vec3 tridentAnchor, double maxDistance) {
+        Vec3 playerAnchor = player.position().add(0.0D, TetherConstants.ROPE_VERTICAL_OFFSET, 0.0D);
+        Vec3 fromTrident = playerAnchor.subtract(tridentAnchor);
+        if (fromTrident.lengthSqr() < 1.0E-6D) {
+            return;
         }
 
-        trident.setDeltaMovement(velocity.scale(TetherConstants.OUT_OF_RANGE_RECALL_DAMPING));
-        trident.hurtMarked = true;
+        Vec3 clampedAnchor = tridentAnchor.add(fromTrident.normalize().scale(maxDistance));
+        Vec3 clampedPosition = clampedAnchor.subtract(0.0D, TetherConstants.ROPE_VERTICAL_OFFSET, 0.0D);
+        player.teleportTo(clampedPosition.x, clampedPosition.y, clampedPosition.z);
+        player.setDeltaMovement(Vec3.ZERO);
+        player.resetFallDistance();
+        player.hurtMarked = true;
     }
 
     private static void enforceLockedSlot(ServerPlayer player, TetherPlayerState state) {
@@ -334,7 +360,6 @@ public final class TetherService {
                 + ", slot=" + state.getLockedSlot()
                 + ", recalling=" + state.isRecalling()
                 + ", boundaryLatched=" + state.isBoundaryLatched()
-                + ", achillesPullTicks=" + state.getAchillesPullTicksRemaining()
                 + ", distance=" + String.format(Locale.ROOT, "%.2f", state.getLastKnownDistance())
                 + ", life=" + state.getTicksSinceStart();
     }

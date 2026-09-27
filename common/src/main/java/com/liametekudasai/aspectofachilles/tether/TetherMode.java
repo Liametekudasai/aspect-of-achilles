@@ -1,10 +1,13 @@
 package com.liametekudasai.aspectofachilles.tether;
 
+import com.liametekudasai.aspectofachilles.config.AchillesConfig;
+
 public enum TetherMode {
     OBEDIENCE,
     ACHILLES;
 
     public double getMaxDistance() {
-        return this == ACHILLES ? TetherConstants.ACHILLES_MAX_DISTANCE : TetherConstants.OBEDIENCE_MAX_DISTANCE;
+        AchillesConfig config = AchillesConfig.get();
+        return this == ACHILLES ? config.achillesMaxDistance : config.obedienceMaxDistance;
     }
 }

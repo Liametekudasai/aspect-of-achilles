@@ -15,7 +15,6 @@ public class TetherPlayerState {
     private boolean recalling;
     private boolean boundaryLatched;
     private boolean achillesPullQueued;
-    private int achillesPullTicksRemaining;
     private ResourceKey<Level> originDimension;
     private ItemStack reservedTrident = ItemStack.EMPTY;
     private int missingTridentTicks;
@@ -86,27 +85,7 @@ public class TetherPlayerState {
         this.achillesPullQueued = achillesPullQueued;
     }
 
-    public int getAchillesPullTicksRemaining() {
-        return achillesPullTicksRemaining;
-    }
-
-    public void beginAchillesPull() {
-        this.achillesPullTicksRemaining = TetherConstants.ACHILLES_PULL_MAX_TICKS;
-    }
-
-    public boolean isAchillesPullActive() {
-        return achillesPullTicksRemaining > 0;
-    }
-
-    public int tickAchillesPull() {
-        if (achillesPullTicksRemaining > 0) {
-            achillesPullTicksRemaining--;
-        }
-        return achillesPullTicksRemaining;
-    }
-
     public void stopAchillesPull() {
-        achillesPullTicksRemaining = 0;
         achillesPullQueued = false;
     }
 
@@ -166,7 +145,6 @@ public class TetherPlayerState {
         recalling = false;
         boundaryLatched = false;
         achillesPullQueued = false;
-        achillesPullTicksRemaining = 0;
         originDimension = null;
         reservedTrident = ItemStack.EMPTY;
         missingTridentTicks = 0;

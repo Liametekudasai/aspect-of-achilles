@@ -1,6 +1,8 @@
 package com.liametekudasai.aspectofachilles;
 
 import com.liametekudasai.aspectofachilles.tether.TetherRuntime;
+import com.liametekudasai.aspectofachilles.config.AchillesConfig;
+import net.blay09.mods.balm.api.Balm;
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
 
@@ -29,6 +31,7 @@ public final class AspectOfAchilles {
         initialized = true;
 
         LOGGER.info("Initializing {} common module", MOD_NAME);
+        Balm.getConfig().registerConfig(AchillesConfig.class);
         TetherRuntime.initialize();
         ModRegistries.initialize();
     }

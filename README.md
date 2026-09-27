@@ -1,8 +1,8 @@
 # Aspect of Achilles
 
-**Version actuelle : 1.1.2**
+**Version actuelle : 1.1.2 (avec les changements en cours)**
 
-Aspect of Achilles est un mod Minecraft centré sur le trident. Il transforme l'arme en projectile relié au joueur par une corde visuelle, avec rappel manuel, limite de portée, traction du joueur et compatibilités d'enchantements supplémentaires.
+Aspect of Achilles est un mod Minecraft centré sur le trident. Il transforme l'arme en projectile relié au joueur par une corde visuelle, avec rappel manuel, limite de portée et mobilité configurables.
 
 ## État du dépôt
 
@@ -21,22 +21,27 @@ Ce dépôt est une **base multi-loader Balm** pour **Minecraft 1.21.1**. Le trav
 
 - enchantements data-driven `Obedience` et `Aspect of Achilles`
 - fusion enclume `Obedience + Riptide -> Aspect of Achilles`
-- application d'enchantements de compatibilité `Sharpness` / `Power` sur trident via enclume
+- `Loyauté` est incompatible avec `Obedience`, `Riptide` et `Aspect of Achilles`
+- le trident ne reçoit que ses enchantements vanilla habituels, `Obedience`, `Aspect of Achilles` et `Fire Aspect` ; il ne peut donc plus recevoir des enchantements sans rapport, tels que `Sweeping Edge`
+- `Fire Aspect` est applicable au trident et enflamme les cibles au lancer comme en mêlée
+- `Empalement` augmente les dégâts de mêlée et de projectile contre tous les mobs, sans condition de type ou de météo
+- JEI affiche, depuis le livre `Aspect of Achilles`, l'explication de la fusion `Obedience + Riptide -> Aspect of Achilles`
 - détection du trident lancé
 - état runtime du tether par joueur
 - entité légère `TetherEntity` côté serveur pour la synchro des extrémités
 - rendu client d'une corde segmentée inspirée du leash vanilla
 - rappel du trident par clic droit
-- pull d'Achille par clic gauche, maintenu sur plusieurs ticks pour une sensation de vitesse constante
+- activation d'Achille par clic droit : une seule impulsion par clic, ou une téléportation au trident selon la configuration serveur
+- configuration serveur Balm synchronisée : longueurs maximales de corde, intensité de l'impulsion et choix exclusif téléportation/impulsion
+- à la limite de corde, un trident volant est stoppé ; un trident planté reste fixe et le joueur est empêché d'aller plus loin
 - retour forcé en cas de changement de dimension / déconnexion / disparition du trident
 - garde-fous d'inventaire pour le slot réservé
-- bonus de dégâts projectile pour `Power`
 
 ### Encore à valider en build réel
 
 - signatures exactes de certaines APIs NeoForge 1.21.1
 - derniers détails du verrouillage de slot dans tous les écrans
-- bonus de mêlée `Sharpness` après test réel pour éviter un double comptage
+- validation en jeu du bonus universel d'Empalement et de l'application de Fire Aspect
 - couche Fabric équivalente à NeoForge
 - polissage du renderer et des cas réseau rares
 
@@ -73,6 +78,11 @@ Puis build complet :
 ```bash
 ./gradlew :neoforge:build
 ```
+
+Le serveur crée `config/aspectofachilles-server.toml`. Les réglages disponibles sont
+`obedienceMaxDistance`, `achillesMaxDistance`, `achillesPullImpulse` et
+`teleportToTrident`. Lorsque `teleportToTrident` vaut `true`, aucune impulsion ne sera
+appliquée après la téléportation.
 
 ## Fichiers de suivi
 

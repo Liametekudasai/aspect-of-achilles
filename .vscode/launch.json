@@ -12,11 +12,11 @@
       "projectName": "neoforge",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
-        "@C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspectofachilles-codebase-draft-1.21.1-v18-sharpness-melee-fix\\neoforge\\build\\moddev\\clientRunProgramArgs.txt"
+        "@C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspect-of-achilles\\neoforge\\build\\moddev\\clientRunProgramArgs.txt"
       ],
       "vmArgs": [
-        "@C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspectofachilles-codebase-draft-1.21.1-v18-sharpness-melee-fix\\neoforge\\build\\moddev\\clientRunVmArgs.txt",
-        "-Dfml.modFolders\u003daspectofachilles%%C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspectofachilles-codebase-draft-1.21.1-v18-sharpness-melee-fix\\neoforge\\bin\\main"
+        "@C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspect-of-achilles\\neoforge\\build\\moddev\\clientRunVmArgs.txt",
+        "-Dfml.modFolders\u003daspectofachilles%%C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspect-of-achilles\\neoforge\\bin\\main"
       ],
       "cwd": "${workspaceFolder}\\neoforge\\run",
       "env": {},
@@ -34,11 +34,11 @@
       "projectName": "neoforge",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
-        "@C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspectofachilles-codebase-draft-1.21.1-v18-sharpness-melee-fix\\neoforge\\build\\moddev\\serverRunProgramArgs.txt"
+        "@C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspect-of-achilles\\neoforge\\build\\moddev\\serverRunProgramArgs.txt"
       ],
       "vmArgs": [
-        "@C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspectofachilles-codebase-draft-1.21.1-v18-sharpness-melee-fix\\neoforge\\build\\moddev\\serverRunVmArgs.txt",
-        "-Dfml.modFolders\u003daspectofachilles%%C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspectofachilles-codebase-draft-1.21.1-v18-sharpness-melee-fix\\neoforge\\bin\\main"
+        "@C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspect-of-achilles\\neoforge\\build\\moddev\\serverRunVmArgs.txt",
+        "-Dfml.modFolders\u003daspectofachilles%%C:\\Users\\liamr\\Documents\\Perso\\Programmation\\minecraft\\aspect-of-achilles\\neoforge\\bin\\main"
       ],
       "cwd": "${workspaceFolder}\\neoforge\\run",
       "env": {},

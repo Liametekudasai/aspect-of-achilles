@@ -3,6 +3,7 @@
     "translate": "enchantment.aspectofachilles.aspect_of_achilles"
   },
   "supported_items": "#aspectofachilles:enchantable/aspect_of_achilles",
+  "exclusive_set": "#aspectofachilles:exclusive_set/aspect_of_achilles",
   "weight": 1,
   "max_level": 1,
   "min_cost": {

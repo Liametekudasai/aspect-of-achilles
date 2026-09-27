@@ -9,6 +9,7 @@ loom = "1.7.4"
 modDevGradle = "2.0.140"
 parchment = "2024.11.17"
 mixin = "0.8.7"
+jei = "19.25.0.325"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -21,6 +22,8 @@ neoForge = { module = "net.neoforged:neoforge", version.ref = "neoForge" }
 fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
 fabricLoader = { module = "net.fabricmc:fabric-loader", version.ref = "fabricLoader" }
 mixin = { module = "org.spongepowered:mixin", version.ref = "mixin" }
+jeiCommonApi = { module = "mezz.jei:jei-1.21.1-common-api", version.ref = "jei" }
+jeiNeoForgeApi = { module = "mezz.jei:jei-1.21.1-neoforge-api", version.ref = "jei" }
 
 [plugins]
 fabricLoom = { id = "fabric-loom", version.ref = "loom" }

@@ -6,9 +6,10 @@
   "aspectofachilles.status.obedience": "Obedience tether active",
   "aspectofachilles.status.achilles": "Aspect of Achilles tether active",
   "aspectofachilles.hint.recall": "Right click to recall the trident",
-  "aspectofachilles.hint.pull": "Left click to launch toward the trident",
+  "aspectofachilles.hint.pull": "Right click to launch toward the trident",
   "enchantment.aspectofachilles.obedience": "Obedience",
   "enchantment.aspectofachilles.aspect_of_achilles": "Aspect of Achilles",
+  "jei.aspectofachilles.aspect_of_achilles.description": "At an anvil, combine a trident with Obedience and Riptide (any level) to obtain Aspect of Achilles.",
   "entity.aspectofachilles.tether": "Tether",
   "aspectofachilles.debug.placeholder": "Gameplay scaffold installed"
 }
